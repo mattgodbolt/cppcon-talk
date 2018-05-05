@@ -438,7 +438,7 @@ sum(std::vector&lt;int, std::allocator&lt;int> > const&):
             <section>
                 <h3>Demo</h3>
                 <pre class="ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;numeric>
   #include &lt;vector>
@@ -566,7 +566,7 @@ size_t size() const noexcept {
                 <h3>Multiplication</h3>
                 <div class="left-pane">
                     <pre><code class="cpp ce" data-trim>
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 int mulByY(int x, int y) {
   return x * y;
 }
@@ -604,7 +604,7 @@ mulByY(int, int):
             <section>
                 <h3>Multiplication</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 int mulBy3(int x) { return x * 3; }
 int mulBy5(int x) { return x * 5; }
 int mulBy7(int x) { return x * 7; }
@@ -614,7 +614,7 @@ int mulBy9(int x) { return x * 9; }
             <section>
                 <h3>Multiplication</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 int mulBy65599(int a) {
   return (a << 16) + (a << 6) - a;
   //         ^          ^
@@ -630,7 +630,7 @@ int mulBy65599(int a) {
             <section>
                 <h3>Division</h3>
                 <div class="left-pane">
-                    <!---/// g71:-O2 -std=c++1z -->
+                    <!---/// g81:-O2 -std=c++1z -->
                     <pre><code class="cpp ce" data-trim>
 int divByY(int x, int y) {
   return x / y;
@@ -660,7 +660,7 @@ modByY(int, int):
             <section>
                 <h3>Division</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 int divBy3(int x) { return x / 3; }
                 </code></pre>
                 <aside class="notes">
@@ -689,7 +689,7 @@ divBy3(int):
             <section>
                 <h3>Modulus</h3>
                 <div class="left-pane">
-                    <!---/// g71:-O2 -std=c++1z -->
+                    <!---/// g81:-O2 -std=c++1z -->
                     <pre><code class="cpp ce" data-trim>
 int modBy3(int x) {
   return x % 3;
@@ -715,7 +715,7 @@ int modBy3(int x) {
             <!-- TODO perf measurements -->
             <section><h3>Ternary operator</h3>
                 <div class="left-pane">
-                    <!---/// g71:-O2 -std=c++1z -->
+                    <!---/// g81:-O2 -std=c++1z -->
                     <pre><code class="cpp ce" data-trim>
 int func(int i) {
   return (i < 0) ? 1234 : 5678;
@@ -735,7 +735,7 @@ func(int):
             </section>
             <section><h3>Counting bits</h3>
                 <pre><code class="ce">
-/// g71:-O2 -std=c++1z -march=haswell
+/// g81:-O2 -std=c++1z -march=haswell
 int countSetBits(int a) {
   int count = 0;
   while (a) {
@@ -765,7 +765,7 @@ int countSetBits(int a) {
             <section>
                 <h3>Functions</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;vector>
   using namespace std;
@@ -785,7 +785,7 @@ int sum(const vector&lt;int> &v) {
             </section>
             <section><h3>Virtual methods</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;vector>
   using namespace std;
@@ -825,7 +825,7 @@ int totalCost(Coster &coster,
             -->
             <section><h3>Virtual methods</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;vector>
   using namespace std;
@@ -846,7 +846,7 @@ int totalCost(Coster &coster,
             </section>
             <section><h3>Virtual methods</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;vector>
   using namespace std;
@@ -860,7 +860,7 @@ struct StaticCost : Coster {
             <section>
                 <h3>Aliasing</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z -march=haswell
 // setup
   #include &lt;functional>
   #include &lt;cstddef>
@@ -879,7 +879,7 @@ void sum(int *first, int num,
                 <!--clang vs gcc difference here -->
                 <!-- likely doesn't work here in clang :'( -->
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   extern void allZero();
   extern void notAllZero();
@@ -897,7 +897,7 @@ void testNotZeroFirst(int a, int b, int c) {
             <section>
                 <h3>Helping the compiler out</h3>
                 <pre><code class="cpp ce">
-/// g71:-O3 -std=c++1z -march=haswell
+/// g81:-O3 -std=c++1z -march=haswell
 // setup
   #include &lt;cstddef>
 int sum(const int *input, size_t length) {
@@ -917,7 +917,7 @@ int sum(const int *input, size_t length) {
             <section>
                 <h3>Helping the compiler out?</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;vector>
   using namespace std;
@@ -949,7 +949,7 @@ double average(const ImageHolder &ih) {
                 <h3>Infinite loops</h3>
                 <!-- TODO get C++ standards quote -->
                 <pre><code data-trim class="cpp ce">
-/// g71:-O2 -DNDEBUG -std=c++1z
+/// g81:-O2 -DNDEBUG -std=c++1z
 // setup
   #include &lt;cassert>
   struct Foo {
@@ -970,7 +970,7 @@ bool test(Foo *f) {
             </section>
             <!--            <section><h3>index signed vs unsigned</h3>
                             <pre><code data-trim class="cpp ce">
-            /// g71:-O2 -std=c++1z
+            /// g81:-O2 -std=c++1z
             // setup
               #include &lt;cstdint>
 
@@ -989,7 +989,7 @@ bool test(Foo *f) {
                         </section>-->
             <section><h3>Heap elision</h3>
                 <pre><code data-trim class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;memory>
   using namespace std;
@@ -1013,7 +1013,7 @@ int func() {
             <section>
                 <h3>Optimizer too clever</h3>
                 <pre><code data-trim class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 constexpr int sumTo(int x) {
   int sum = 0;
   for (int i = 0; i &lt;= x; ++i)
@@ -1075,7 +1075,7 @@ int main(int argc, const char *argv[]) {
                 <h3>Classes</h3>
                 <div class="left-pane">
                     <pre><code class="cpp ce" data-trim>
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 class Holder {
   int value_{};
 public:
@@ -1103,7 +1103,7 @@ public:
             <section>
                 <h3>Templates</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 template&lt;typename T>
 class Holder {
   T value_{};
@@ -1117,7 +1117,7 @@ public:
             <section><h3>Power features</h3>
                 <ul>
                     <li>
-                        <a href="http://localhost:10240/#%7B%22version%22%3A4%2C%22content%22%3A%5B%7B%22type%22%3A%22row%22%2C%22content%22%3A%5B%7B%22type%22%3A%22component%22%2C%22componentName%22%3A%22codeEditor%22%2C%22componentState%22%3A%7B%22id%22%3A1%2C%22source%22%3A%22%2F%2F%20setup%5Cn%20%20%23include%20%3Cfunctional%3E%5Cn%20%20%23include%20%3Ccstddef%3E%5Cnvoid%20sum(int%20*first%2C%20int%20num%2C%5Cn%20%20%20%20%20%20%20%20%20int%20*out_sum)%20%7B%5Cn%20%20*out_sum%20%3D%200%3B%5Cn%20%20for%20(int%20i%20%3D%200%3B%20i%20%3C%20num%3B%20%2B%2Bi)%5Cn%20%20%20%20*out_sum%20%2B%3D%20first%5Bi%5D%3B%5Cn%7D%5Cn%22%2C%22options%22%3A%7B%22compileOnChange%22%3Atrue%2C%22colouriseAsm%22%3Atrue%7D%2C%22fontScale%22%3A1.6%7D%7D%2C%7B%22type%22%3A%22component%22%2C%22componentName%22%3A%22compiler%22%2C%22componentState%22%3A%7B%22source%22%3A1%2C%22filters%22%3A%7B%22commentOnly%22%3Atrue%2C%22directives%22%3Atrue%2C%22intel%22%3Atrue%2C%22labels%22%3Atrue%2C%22trim%22%3Atrue%7D%2C%22options%22%3A%22-O2%20-std%3Dc%2B%2B1z%22%2C%22compiler%22%3A%22g71%22%2C%22fontScale%22%3A1.8%7D%7D%5D%7D%5D%7D">
+                        <a href="http://localhost:10240/#%7B%22version%22%3A4%2C%22content%22%3A%5B%7B%22type%22%3A%22row%22%2C%22content%22%3A%5B%7B%22type%22%3A%22component%22%2C%22componentName%22%3A%22codeEditor%22%2C%22componentState%22%3A%7B%22id%22%3A1%2C%22source%22%3A%22%2F%2F%20setup%5Cn%20%20%23include%20%3Cfunctional%3E%5Cn%20%20%23include%20%3Ccstddef%3E%5Cnvoid%20sum(int%20*first%2C%20int%20num%2C%5Cn%20%20%20%20%20%20%20%20%20int%20*out_sum)%20%7B%5Cn%20%20*out_sum%20%3D%200%3B%5Cn%20%20for%20(int%20i%20%3D%200%3B%20i%20%3C%20num%3B%20%2B%2Bi)%5Cn%20%20%20%20*out_sum%20%2B%3D%20first%5Bi%5D%3B%5Cn%7D%5Cn%22%2C%22options%22%3A%7B%22compileOnChange%22%3Atrue%2C%22colouriseAsm%22%3Atrue%7D%2C%22fontScale%22%3A1.6%7D%7D%2C%7B%22type%22%3A%22component%22%2C%22componentName%22%3A%22compiler%22%2C%22componentState%22%3A%7B%22source%22%3A1%2C%22filters%22%3A%7B%22commentOnly%22%3Atrue%2C%22directives%22%3Atrue%2C%22intel%22%3Atrue%2C%22labels%22%3Atrue%2C%22trim%22%3Atrue%7D%2C%22options%22%3A%22-O2%20-std%3Dc%2B%2B1z%22%2C%22compiler%22%3A%22g81%22%2C%22fontScale%22%3A1.8%7D%7D%5D%7D%5D%7D">
                             Difference view</a></li>
                     <li>Conformance view TODO</li>
                     <li>AST view TODO</li>
@@ -1151,7 +1151,7 @@ public:
                 <!-- TODO maybe recap hash map? -->
                 <h3>Finding an order</h3>
                 <pre><code class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;unordered_map>
   #include &lt;cstdint>
@@ -1211,7 +1211,7 @@ Order *findOrder(
                 <h3>Simplified Order</h3>
                 <pre>NEW <i>stock</i> <i>price</i> <i>quantity</i></pre>
                 <pre class="fragment"><code data-trim class="cpp ce">
-/// g71:-O2 -std=c++1z
+/// g81:-O2 -std=c++1z
 // setup
   #include &lt;string>
   #include &lt;sstream>
@@ -1270,7 +1270,7 @@ has_facet(const locale& __loc) {
             <section>
                 <h3>Take Two</h3>
                 <pre><code class="cpp ce" data-trim>
-/// g71:-O2
+/// g81:-O2
 // setup
   #include &lt;cstdio>
 void newOrder(char *buf, const char *stock,
@@ -1343,7 +1343,7 @@ public:
             <section>
                 <h3>Take Three</h3>
                 <pre><code class="cpp ce">
-/// g71:-O3 -std=c++1z -march=haswell
+/// g81:-O3 -std=c++1z -march=haswell
 // setup
   #include &lt;utility>
   using namespace std;
@@ -1436,7 +1436,7 @@ void Format::decimalAppendNonNeg(unsigned value) {
             <section>
                 <h3>log10(x)</h3>
                 <pre><code class="ce cpp" data-trim>
-/// g71:-O2 -march=haswell
+/// g81:-O2 -march=haswell
 constexpr unsigned PowersOf10[] = {
   1, 10, 100, 1000, 10000, 100000, 1000000,
   10000000, 100000000, 1000000000
@@ -1694,7 +1694,7 @@ T f5() {
         <section>
             <h3>The address sanitizer</h3>
             <pre><code class="ce">
-/// g71:-O2
+/// g81:-O2
 // setup
   #include &lt;cstdlib>
 int read(int *array, size_t index) {

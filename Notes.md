@@ -1,3 +1,7 @@
+# 5th May notes
+Need to work on devirt, maybe "helping the compiler out" part too.
+Done some of the other stuff, need to time it.
+
 # 4th May notes
 Spoke to Jon, something "like the cppcon talk" would probably be ok.
 Will:
