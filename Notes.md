@@ -1,3 +1,30 @@
+# 4th May notes
+Spoke to Jon, something "like the cppcon talk" would probably be ok.
+Will:
+* Tailor to audience, skip or reduce the x86 asm bits? (Or ask and skip if needed)
+* Add in some examples that were skipped from before
+  * ternary
+  * calling an unknown function
+    * show what `__attribute__((pure))` does etc
+  * resurrect devirtualisation
+  * aliasing
+  * helping the compiler out
+  * heap elision?
+* Maybe drop some of the other examples as needed
+* CE power features?
+  * Conformance view
+  * AST view
+  * Optimization view
+  * OTHER LANGUAGES!
+* More on How It Works?
+
+TODO
+* Update GCC to 8.1, clang to latest too
+* Fix "setup" link in CE
+
+-----
+# Below here lies cppcon 2017 notes
+
 # 18 Sep notes/TODO
 * Photos/images on slides
 * Hellige suggests "How do people use it"

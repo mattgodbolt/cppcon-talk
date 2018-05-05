@@ -4,7 +4,7 @@
     for (let i = 0, len = ce_nodes.length; i < len; i++) {
         let element = ce_nodes[i];
         let compiler = "g71";
-        let options = "-O1"
+        let options = "-O1";
         let source = unescape(element.textContent);
         let lines = source.split('\n');
         source = "";
@@ -37,7 +37,7 @@
                 id: 1,
                 source: source,
                 options: {compileOnChange: true, colouriseAsm: true},
-                fontScale: 1.6
+                fontScale: 2.5
             }
         });
         content.push({
@@ -48,7 +48,7 @@
                 filters: {commentOnly: true, directives: true, intel: true, labels: true, trim: true},
                 options: options,
                 compiler: compiler,
-                fontScale: 1.8
+                fontScale: 3.0
             }
         });
         let obj = {
@@ -59,9 +59,9 @@
 
         let parent = element.parentElement;
 
-        //const isPdf = !!window.location.search.match(/print-pdf/gi);
-        //const baseUrl = isPdf ? 'https://gcc.godbolt.org/' : 'http://localhost:10240/';
-        const baseUrl = 'https://gcc.godbolt.org/';
+        const isPdf = !!window.location.search.match(/print-pdf/gi);
+        const baseUrl = isPdf ? 'https://gcc.godbolt.org/' : 'http://localhost:10240/';
+        // const baseUrl = 'https://gcc.godbolt.org/';
 
         if (parent.tagName === "PRE") {
             let a = document.createElement('a');

@@ -23,6 +23,11 @@
             padding: 5px;
         }
 
+        div.coinbase {
+            fill: white;
+            background: linear-gradient(rgb(15, 98, 189) 24%, rgb(10, 64, 122) 168%);
+        }
+
         div.footnote {
             margin-top: 2em;
             font-size: smaller;
@@ -35,10 +40,6 @@
 
         #sum tr {
             border: 1px solid black;
-        }
-
-        #sum .filled {
-            background: rgb(141, 211, 199);
         }
 
         code.smaller {
@@ -124,12 +125,12 @@
 <div class="reveal">
     <section class="slides">
         <section id="title">
-            <h2>What Has My Compiler Done for Me Lately?</h2>
-            <h5>Unbolting the Compiler's Lid</h5>
+            <h2>What Else Has My Compiler Done for Me Lately?</h2>
+            <h5>Unbolting the Compiler's Lid...again</h5>
             <em><a href="https://xania.org/">Matt Godbolt</a></em>
             <br>
             <em>
-                <a href="https://twitter.com/mattgodbolt">@mattgodbolt</a>
+                <a href="https://twitter.com/mattgodbolt">@mattgodbolt</a><br>
                 <a href="mailto:matt@godbolt.org">matt@godbolt.org</a>
             </em>
         </section>
@@ -149,6 +150,12 @@
                     <img class="logo" src="images/google.png" height="30">
                     <img class="logo" src="images/DRWSmallLogo.png" height="30">
                 </div>
+                <div class="logo fragment coinbase">
+                    <svg height="30" width="130">
+                        <path fill-rule="evenodd"
+                              d="M10.34 23.89c.93 0 1.8-.17 2.62-.5 0 .03 1.67 2.62 1.7 2.63a9.88 9.88 0 0 1-4.81 1.17C4.72 27.2 1 23.81 1 18.42c0-5.43 3.9-8.8 8.85-8.8 1.75 0 3.14.38 4.53 1.12l-1.6 2.7c-.84-.33-1.7-.48-2.6-.48-3.03 0-5.38 1.93-5.38 5.46 0 3.34 2.27 5.47 5.54 5.47zM23.27 9.62c5.04 0 8.69 3.57 8.69 8.8 0 5.2-3.65 8.77-8.7 8.77-5 0-8.65-3.57-8.65-8.77 0-5.23 3.65-8.8 8.66-8.8zm0 3.22c-2.81 0-4.86 2.17-4.86 5.58 0 3.38 2.05 5.55 4.86 5.55 2.88 0 4.9-2.17 4.9-5.55 0-3.41-2.02-5.58-4.9-5.58zm11.08 13.97V10h3.76V26.8h-3.76zm-.5-21.98a2.36 2.36 0 0 1 4.71 0 2.4 2.4 0 0 1-2.35 2.4 2.4 2.4 0 0 1-2.35-2.4zm7.54 6.23a22.54 22.54 0 0 1 7.7-1.44c4.3 0 7.02 1.63 7.02 6.37v10.82H52.4V16.34c0-2.43-1.51-3.3-3.6-3.3-1.33 0-2.66.18-3.65.49V26.8H41.4V11.06zM59.26 1h3.76v9.45c.8-.42 2.35-.83 3.83-.83 4.86 0 8.5 3.1 8.5 8.5 0 5.43-3.6 9.07-9.82 9.07-2.43 0-4.56-.5-6.27-1.1V1zm3.76 22.62c.72.23 1.67.35 2.62.35 3.45 0 5.92-1.9 5.92-5.77 0-3.27-2.32-5.2-5.16-5.2-1.48 0-2.62.38-3.38.8v9.82zm23.2-8.08c0-1.82-1.38-2.66-3.24-2.66-1.93 0-3.45.57-4.85 1.37v-3.27a11.21 11.21 0 0 1 5.46-1.36c3.68 0 6.3 1.52 6.3 5.73v11.12c-1.6.42-3.87.68-5.77.68-4.36 0-7.55-1.32-7.55-5.12 0-3.42 2.92-5.09 7.78-5.09h1.86v-1.4zm0 3.9h-1.6c-2.62 0-4.33.77-4.33 2.48 0 1.74 1.6 2.42 3.87 2.42.57 0 1.37-.07 2.05-.18v-4.71zm6.4 2.82a8.82 8.82 0 0 0 5.13 1.9c1.67 0 2.77-.57 2.77-1.9 0-1.37-.99-1.86-3.15-2.43-3.5-.8-4.97-2.2-4.97-5.13 0-3.41 2.58-5.08 6-5.08 1.9 0 3.41.41 4.82 1.29v3.45a7.79 7.79 0 0 0-4.71-1.7c-1.63 0-2.5.8-2.5 1.9 0 1.1.71 1.66 2.65 2.2 3.84.83 5.5 2.27 5.5 5.3 0 3.54-2.69 5.13-6.33 5.13a9.87 9.87 0 0 1-5.2-1.36v-3.57zm16.69-3v.07c.23 3 2.8 4.64 5.43 4.64 2.31 0 3.98-.54 5.65-1.64v3.3c-1.52 1.07-3.76 1.56-5.92 1.56-5.24 0-8.8-3.34-8.8-8.65 0-5.35 3.49-8.92 8.12-8.92 4.9 0 7.21 3.15 7.21 7.74v1.9h-11.7zm8.16-2.43c-.08-2.62-1.37-4.06-3.8-4.06-2.16 0-3.75 1.52-4.25 4.06h8.05z"></path>
+                    </svg>
+                </div>
                 <aside class="notes">
                     <h4>Potted history:</h4>
                     <ul>
@@ -161,7 +168,8 @@
                         <li>Got a job making games, high performance stuff</li>
                         <li>Co-ran C++ tools company</li>
                         <li>Google; occasional performance stuff for cellphones</li>
-                        <li>Now 6 years at DRW doing performance stuff for trading systems</li>
+                        <li>7 years at DRW doing performance stuff for trading systems</li>
+                        <li>Off to start a new adventure in July</li>
                         <li>Still an asm hacker at heart though don't touch it so more</li>
                     </ul>
                     <p>Amazing opportunity to talk to lots of C++ programmers at all levels. My passion.</p>
@@ -182,7 +190,7 @@
                 <ul>
                     <li>Compiler Explorer story</li>
                     <li>Assembly 101</li>
-                    <li>What has my compiler done for me lately?</li>
+                    <li>What else has my compiler done for me lately?</li>
                     <li>Behind the scenes of Compiler Explorer</li>
                 </ul>
             </section>
@@ -215,6 +223,7 @@
             </section>
             <section>
                 <h3>WARNING</h3>
+                <!-- latency vs throughput ? -->
                 <ul>
                     <li>Reading assembly alone can be misleading</li>
                     <li><em>Always</em> measure too</li>
@@ -232,7 +241,6 @@
 
         <!------------------------------------------------------->
         <section id="asm101">
-            <!-- reference "just enough asm to be dangerous talk -->
             <section>
                 <h3>x86 Assembly 101</h3>
             </section>
@@ -381,7 +389,8 @@ sum(std::vector&lt;int, std::allocator&lt;int> > const&):
             </section>
             <section><h3>Compiler Explorer v0.1</h3>
                 <div>Not very pretty</div>
-                <h5 class="fragment">To the web!</h5>
+                <h5 class="fragment" data-fragment-index="1">To the web!</h5>
+                <img src="images/CE.svg" height="200" class="fragment" data-fragment-index="1">
             </section>
         </section>
 
@@ -580,7 +589,6 @@ modByY(int, int):
                 </aside>
             </section>
             <section>
-                <!-- TODO sxs ? -->
                 <h3>Division</h3>
                 <pre><code class="cpp ce">
 /// g71:-O2 -std=c++1z -march=haswell
@@ -638,6 +646,26 @@ mov eax, edi
                     <li>boost multi_index</li>
                 </ul>
             </section>
+            <section><h3>Ternary operator</h3>
+                <div class="left-pane">
+                    <!---/// g71:-O2 -std=c++1z -->
+                    <pre><code class="cpp ce" data-trim>
+int func(int i) {
+  return (i < 0) ? 1234 : 5678;
+}
+                    </code></pre>
+                </div>
+                <div class="right-pane">
+                    <pre><code class="x86asm" data-noescape data-trim>
+func(int):
+  mov eax, edi
+  sar eax, 31
+  and eax, -4444
+  add eax, 5678
+  ret
+                    </code></pre>
+                </div>
+            </section>
             <section><h3>Counting bits</h3>
                 <pre><code class="ce">
 /// g71:-O2 -std=c++1z -march=haswell
@@ -680,6 +708,7 @@ int main(int argc, const char *argv[]) {
             </section>
             <section>
                 <h3>Sum(x)</h3>
+                <!-- TODO Jordan's sum comment -->
                 <div>\[
                     \begin{aligned}
                     \sum{x} &amp;&equiv; \frac{x(x + 1)}{2} \\
@@ -699,7 +728,7 @@ int main(int argc, const char *argv[]) {
         <section id="howitworks">
             <section>
                 <h3>How it works</h3>
-                <!-- TODO picture of duct tape disaster -->
+                <!-- TODO picture of kirk -->
             </section>
             <section>
                 <h3>How it works - Backend</h3>
@@ -781,7 +810,6 @@ webServer.listen(10240);
                     <li class="fragment">Running locally is easy!<br>
                         <pre>$ make</pre>
                     </li>
-                    <li class="fragment">More in next C++ Weekly</li>
                 </ul>
             </section>
         </section>
@@ -807,8 +835,6 @@ webServer.listen(10240);
             <section>
                 <h3>Coming soon...</h3>
                 <ul>
-                    <li>CFG viewer</li>
-                    <li>Unified languages</li>
                     <li>Execution support</li>
                 </ul>
             </section>
@@ -818,9 +844,8 @@ webServer.listen(10240);
                     <li>Thanks to contributors:
                         <ul>
                             <li>Rubén Rincón</li>
-                            <li>Gabriel Devillers</li>
-                            <li>Simon Brand, Johan Engelen, Jared Wyles, Chedy Najjar</li>
-                            <li>...and the rest!</li>
+                            <li>Jared Wyles, Partouf, Simon Brand, Chedy Najjar</li>
+                            <li>...Johan Engelen...and the rest!</li>
                         </ul>
                     </li>
                     <li>Thanks to Patreon folks</li>
@@ -832,13 +857,7 @@ webServer.listen(10240);
                 <h3>Go read some assembly!</h3>
                 <br>
                 <div>
-                    { <a href="https://gcc.godbolt.org/">gcc</a>
-                    , <a href="https://gcc.godbolt.org/">cppx</a>
-                    , <a href="https://d.godbolt.org/">d</a>
-                    , <a href="https://swift.godbolt.org/">swift</a>
-                    , <a href="https://haskell.godbolt.org/">haskell</a>
-                    , <a href="https://go.godbolt.org/">go</a>
-                    , <a href="https://ispc.godbolt.org/">ispc</a> }.godbolt.org
+                    <a href="https://godbolt.org/">godbolt.org</a>
                 </div>
                 <div class="footnote fragment"><h6>(And thank a compiler developer)</h6></div>
             </section>
@@ -855,6 +874,8 @@ webServer.listen(10240);
         transition: 'none',
         history: true,
         slideNumber: true,
+        width: 1280,
+        height: 720,
         math: {config: 'TeX-AMS_HTML-full'},
         dependencies: [
             {src: 'reveal.js/plugin/markdown/marked.js'},
