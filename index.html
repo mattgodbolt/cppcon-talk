@@ -84,14 +84,6 @@
             font-style: italic;
         }
 
-        .soh {
-            color: rgb(27, 145, 33);
-        }
-
-        a.view-button {
-            font-size: 12px;
-        }
-
         div.left-pane {
             width: 50%;
             float: left;
@@ -100,14 +92,6 @@
         div.right-pane {
             width: 50%;
             float: right;
-        }
-
-        .fix-key {
-            color: #03330c;
-        }
-
-        .fix-value {
-            color: #1f1f1f;
         }
     </style>
 
@@ -177,12 +161,10 @@
             </section>
             <section>
                 <h3>My goals</h3>
-                <!--<div>
-                    <img src="images/goal.jpg" height="150px">
-                </div>-->
                 <ul>
                     <li>Un-scary-fy assembler</li>
                     <li>Appreciate your compiler!</li>
+                    <li class="fragment">My love letter to compiler writers...</li>
                 </ul>
             </section>
             <section>
@@ -528,7 +510,9 @@ int sum(const vector&lt;int> &v) {
   jb .L3
                     </code></pre>
                 </div>
-                <a class="fragment" target="_blank" href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'//+setup%0A++%23include+%3Cvector%3E%0A++%23include+%3Cnumeric%3E%0A++using+namespace+std%3B%0Aint+someFunc(int)%3B%0Aint+sum(const+vector%3Cint%3E+%26v)+%7B%0A++return+accumulate(%0A++++begin(v),+end(v),+0,%0A++++%5B%5D(int+x,+int+y)+%7B+%0A++++++return+x+%2B+someFunc(y)%3B+%0A++%7D)%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Accumulate version</a>
+                <a class="fragment" target="_blank"
+                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'//+setup%0A++%23include+%3Cvector%3E%0A++%23include+%3Cnumeric%3E%0A++using+namespace+std%3B%0Aint+someFunc(int)%3B%0Aint+sum(const+vector%3Cint%3E+%26v)+%7B%0A++return+accumulate(%0A++++begin(v),+end(v),+0,%0A++++%5B%5D(int+x,+int+y)+%7B+%0A++++++return+x+%2B+someFunc(y)%3B+%0A++%7D)%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Accumulate
+                    version</a>
                 <aside class="notes">
                     Compiler can't make any assumptions about someFunc. So has to reload size.
                     Even though vector is const, compiler can't assume it's not going to change.
@@ -537,7 +521,7 @@ int sum(const vector&lt;int> &v) {
                 </aside>
             </section>
             <section>
-                <h3>Aliasing</h3>
+                <h3>Aliasing 1/2</h3>
                 <div class="left-pane">
                 <pre><code class="cpp ce" data-noescape>
 /// g81:-O2 -std=c++1z -march=haswell
@@ -570,7 +554,39 @@ void sumToFirstZero(
   jg .L4
                     </code></pre>
                 </div>
-                <a class="fragment" target="_blank" href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'struct+Result+%7B%0A++int+sum%3B%0A++int+lastNonZero%3B%0A%7D%3B%0AResult+sumToFirstZero(%0A++++const+int+*first,+int+num)+%7B%0A++Result+r%7B0,0%7D%3B%0A++int+i%3B%0A++for+(i+%3D+0%3B+i+%3C+num%3B+%2B%2Bi)+%7B%0A++++if+(first%5Bi%5D+%3D%3D+0)+break%3B%0A++++r.sum+%2B%3D+first%5Bi%5D%3B%0A++%7D%0A++r.lastNonZero+%3D+i%3B%0A++return+r%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Alternative implementation</a>
+                <a class="fragment" target="_blank"
+                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'struct+Result+%7B%0A++int+sum%3B%0A++int+lastNonZero%3B%0A%7D%3B%0AResult+sumToFirstZero(%0A++++const+int+*first,+int+num)+%7B%0A++Result+r%7B0,0%7D%3B%0A++int+i%3B%0A++for+(i+%3D+0%3B+i+%3C+num%3B+%2B%2Bi)+%7B%0A++++if+(first%5Bi%5D+%3D%3D+0)+break%3B%0A++++r.sum+%2B%3D+first%5Bi%5D%3B%0A++%7D%0A++r.lastNonZero+%3D+i%3B%0A++return+r%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Alternative
+                    implementation</a>
+            </section>
+            <section>
+                <h3>Aliasing 2/2</h3>
+                <div class="left-pane">
+                <pre><code class="cpp ce" data-noescape>
+/// g81:-O3 -std=c++1z -march=haswell
+void maxArray(double* x, double* y) {
+  for (int i = 0; i < 65536; i++) {
+    if (y[i] > x[i])
+      x[i] = y[i];
+  }
+}
+            </code></pre>
+                </div>
+                <div class="right-pane">
+                    <pre><code class="x86asm" data-trim>
+maxArray(double*, double*):
+  lea rax, [rsi+32]
+  cmp rdi, rax
+  jnb .L10
+  lea rax, [rdi+32]
+  cmp rsi, rax
+  jb .L9
+...
+                    </code></pre>
+                </div>
+                <!-- TODO is this good? -->
+                <a class="fragment" target="_blank"
+                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'using+aligned_double+%3D+double+%0A++__attribute__((aligned(64)))+*%3B%0A%0Avoid+maxArray(aligned_double+__restrict+x,+aligned_double+__restrict+y)+%7B%0A++for+(int+i+%3D+0%3B+i+%3C+65536%3B+i%2B%2B)+%7B%0A++++x%5Bi%5D+%3D+((y%5Bi%5D+%3E+x%5Bi%5D)+%3F+y%5Bi%5D+:+x%5Bi%5D)%3B%0A++%7D%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O3+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Maybe
+                    better?</a>
             </section>
             <section><h3>Heap elision</h3>
                 <pre><code data-trim class="cpp ce">
@@ -586,8 +602,28 @@ int func() {
 }
                 </code></pre>
             </section>
+            <section><h3>Ternary operator</h3>
+                <div class="left-pane">
+                    <pre><code class="cpp ce" data-trim>
+/// g81:-O2 -std=c++1z -march=haswell
+int func(int i) {
+  return (i < 0) ? 1234 : 5678;
+}
+                    </code></pre>
+                </div>
+                <div class="right-pane">
+                    <pre><code class="x86asm" data-noescape data-trim>
+func(int):
+  mov eax, edi
+  sar eax, 31
+  and eax, -4444
+  add eax, 5678
+  ret
+                    </code></pre>
+                </div>
+            </section>
 
-<!-------------------- old stuff -->
+            <!-------------------- old stuff -->
 
             <section>
                 <h3>Multiplication</h3>
@@ -739,26 +775,6 @@ mov eax, edi
                     </li>
                     <li>boost multi_index</li>
                 </ul>
-            </section>
-            <section><h3>Ternary operator</h3>
-                <div class="left-pane">
-                    <pre><code class="cpp ce" data-trim>
-/// g81:-O2 -std=c++1z -march=haswell
-int func(int i) {
-  return (i < 0) ? 1234 : 5678;
-}
-                    </code></pre>
-                </div>
-                <div class="right-pane">
-                    <pre><code class="x86asm" data-noescape data-trim>
-func(int):
-  mov eax, edi
-  sar eax, 31
-  and eax, -4444
-  add eax, 5678
-  ret
-                    </code></pre>
-                </div>
             </section>
             <section><h3>Counting bits</h3>
                 <pre><code class="ce">
