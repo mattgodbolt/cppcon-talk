@@ -122,7 +122,7 @@
 
         <!------------------------------------------------------>
         <section id="why">
-            <section>
+            <!--<section>
                 <h3>About me</h3>
                 <div class="fragment">
                     <img src="images/6502_z80.jpg" height="160">
@@ -158,15 +158,16 @@
                     </ul>
                     <p>Amazing opportunity to talk to lots of C++ programmers at all levels. My passion.</p>
                 </aside>
-            </section>
-            <section>
-                <h3>My goals</h3>
-                <ul>
-                    <li>Un-scary-fy assembler</li>
-                    <li>Appreciate your compiler!</li>
-                    <li class="fragment">My love letter to compiler writers...</li>
-                </ul>
-            </section>
+            </section>-->
+            <!--
+                        <section>
+                            <h3>My goals</h3>
+                            <ul>
+                                <li>Un-scary-fy assembler</li>
+                                <li>Appreciate your compiler!</li>
+                            </ul>
+                        </section>
+            -->
             <section>
                 <h3>Outline</h3>
                 <ul>
@@ -197,6 +198,7 @@
                   return result;
                 }</code></pre>
                 <div class="fragment">Is one better than the other?</div>
+                <div class="fragment">Look at compiler output!</div>
                 <aside class="notes">
                     <ul>
                         <li>2012, C++11isms, range-for</li>
@@ -275,6 +277,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="fragment">And so on for rdi, rsi, rcx, rdx...</div>
             </section>
 
             <section>
@@ -405,6 +408,9 @@ int sum(const vector&lt;int> &v) {
             </section>
             <section>
                 <h3>Walkthrough</h3>
+                <pre><code data-trim class="cpp">
+int sum(const vector&lt;int> &v) {
+                </code></pre>
                 <pre><code data-trim class="x86asm">
   ; rdi = const vector&lt;int> *
   mov rdx, QWORD PTR [rdi]   ; rdx = *rdi     &equiv; begin()
@@ -475,156 +481,8 @@ je .L4
 
 
         <!------------------------------------------------------->
-        <section id="compilersAreSuperSmart">
+        <section id="compilersAreSuperSmart1">
             <section><h3>What has my compiler<br>done for me lately?</h3></section>
-            <section><h3>What else has my compiler<br>done for me lately?</h3></section>
-            <section>
-                <h3>Functions</h3>
-                <div class="left-pane">
-                <pre><code class="cpp ce">
-/// g81:-O2 -std=c++1z -march=haswell
-// setup
-  #include &lt;vector>
-  using namespace std;
-int someFunc(int);
-int sum(const vector&lt;int> &v) {
-  int result = 0;
-  for (size_t i = 0;
-       i &lt; v.size(); ++i)
-    result += someFunc(v[i]);
-  return result;
-}</code></pre>
-                </div>
-                <div class="right-pane">
-                    <pre><code class="x86asm" data-trim>
-.L3:
-  mov edi, DWORD PTR [rdx+rbx*4]
-  inc rbx
-  call someFunc(int)
-  mov rdx, QWORD PTR [rbp+0]
-  add r12d, eax
-  mov rax, QWORD PTR [rbp+8]
-  sub rax, rdx
-  sar rax, 2
-  cmp rbx, rax
-  jb .L3
-                    </code></pre>
-                </div>
-                <a class="fragment" target="_blank"
-                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'//+setup%0A++%23include+%3Cvector%3E%0A++%23include+%3Cnumeric%3E%0A++using+namespace+std%3B%0Aint+someFunc(int)%3B%0Aint+sum(const+vector%3Cint%3E+%26v)+%7B%0A++return+accumulate(%0A++++begin(v),+end(v),+0,%0A++++%5B%5D(int+x,+int+y)+%7B+%0A++++++return+x+%2B+someFunc(y)%3B+%0A++%7D)%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Accumulate
-                    version</a>
-                <aside class="notes">
-                    Compiler can't make any assumptions about someFunc. So has to reload size.
-                    Even though vector is const, compiler can't assume it's not going to change.
-                    Using range-for fixes issue as range-for is defined to copy the extents of the iterand outside of
-                    loop.
-                </aside>
-            </section>
-            <section>
-                <h3>Aliasing 1/2</h3>
-                <div class="left-pane">
-                <pre><code class="cpp ce" data-noescape>
-/// g81:-O2 -std=c++1z -march=haswell
-// Worst API ever...
-void sumToFirstZero(
-    int *first, int &num,
-    int &sum) {
-  sum = 0;
-  int i;
-  for (i = 0; i < num; ++i) {
-    if (first[i] == 0) break;
-    sum += first[i];
-  }
-  num = i;
-}
-            </code></pre>
-                </div>
-                <div class="right-pane">
-                    <pre><code class="x86asm" data-trim>
-.L4:
-  inc rax
-  mov ecx, DWORD PTR [rdi-4+rax*4]
-  test ecx, ecx
-  je .L2
-.L3:
-  add r8d, ecx
-  mov r9d, eax
-  mov DWORD PTR [rdx], r8d
-  cmp DWORD PTR [rsi], eax
-  jg .L4
-                    </code></pre>
-                </div>
-                <a class="fragment" target="_blank"
-                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'struct+Result+%7B%0A++int+sum%3B%0A++int+lastNonZero%3B%0A%7D%3B%0AResult+sumToFirstZero(%0A++++const+int+*first,+int+num)+%7B%0A++Result+r%7B0,0%7D%3B%0A++int+i%3B%0A++for+(i+%3D+0%3B+i+%3C+num%3B+%2B%2Bi)+%7B%0A++++if+(first%5Bi%5D+%3D%3D+0)+break%3B%0A++++r.sum+%2B%3D+first%5Bi%5D%3B%0A++%7D%0A++r.lastNonZero+%3D+i%3B%0A++return+r%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Alternative
-                    implementation</a>
-            </section>
-            <section>
-                <h3>Aliasing 2/2</h3>
-                <div class="left-pane">
-                <pre><code class="cpp ce" data-noescape>
-/// g81:-O3 -std=c++1z -march=haswell
-void maxArray(double* x, double* y) {
-  for (int i = 0; i < 65536; i++) {
-    if (y[i] > x[i])
-      x[i] = y[i];
-  }
-}
-            </code></pre>
-                </div>
-                <div class="right-pane">
-                    <pre><code class="x86asm" data-trim>
-maxArray(double*, double*):
-  lea rax, [rsi+32]
-  cmp rdi, rax
-  jnb .L10
-  lea rax, [rdi+32]
-  cmp rsi, rax
-  jb .L9
-...
-                    </code></pre>
-                </div>
-                <!-- TODO is this good? -->
-                <a class="fragment" target="_blank"
-                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'using+aligned_double+%3D+double+%0A++__attribute__((aligned(64)))+*%3B%0A%0Avoid+maxArray(aligned_double+__restrict+x,+aligned_double+__restrict+y)+%7B%0A++for+(int+i+%3D+0%3B+i+%3C+65536%3B+i%2B%2B)+%7B%0A++++x%5Bi%5D+%3D+((y%5Bi%5D+%3E+x%5Bi%5D)+%3F+y%5Bi%5D+:+x%5Bi%5D)%3B%0A++%7D%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O3+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Maybe
-                    better?</a>
-            </section>
-            <section><h3>Heap elision</h3>
-                <pre><code data-trim class="cpp ce">
-/// g81:-O2 -std=c++1z -march=haswell
-// setup
-  #include &lt;memory>
-  using namespace std;
-
-int func() {
-  auto a = make_unique&lt;int>(42);
-  auto b = make_unique&lt;int>(24);
-  return *a + *b;
-}
-                </code></pre>
-            </section>
-            <section><h3>Ternary operator</h3>
-                <div class="left-pane">
-                    <pre><code class="cpp ce" data-trim>
-/// g81:-O2 -std=c++1z -march=haswell
-int func(int i) {
-  return (i < 0) ? 1234 : 5678;
-}
-                    </code></pre>
-                </div>
-                <div class="right-pane">
-                    <pre><code class="x86asm" data-noescape data-trim>
-func(int):
-  mov eax, edi
-  sar eax, 31
-  and eax, -4444
-  add eax, 5678
-  ret
-                    </code></pre>
-                </div>
-            </section>
-
-            <!-------------------- old stuff -->
-
             <section>
                 <h3>Multiplication</h3>
                 <div class="left-pane">
@@ -644,21 +502,23 @@ mulByY(int, int):
                     </code></pre>
                 </div>
             </section>
-            <section>
-                <h3>Multiplication</h3>
-                <pre>
-                            1101    (13)
-                          x 0101     (5)
-                        --------
-                            1101
-                           0000
-                          1101
-                       + 0000
-                        --------
-                        01000001    (65)</pre>
-                <div class="fragment">That's a lot of additions!</div>
-                <div class="fragment">Haswell 32-bit multiply - 4 cycles</div>
-            </section>
+            <!--
+                        <section>
+                            <h3>Multiplication</h3>
+                            <pre>
+                                        1101    (13)
+                                      x 0101     (5)
+                                    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+                                        1101
+                                       0000
+                                      1101
+                                   + 0000
+                                    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
+                                    01000001    (65)</pre>
+                            <div class="fragment">That's a lot of additions!</div>
+                            <div class="fragment">Haswell 32-bit multiply - 4 cycles</div>
+                        </section>
+            -->
             <section>
                 <h3>Multiplication</h3>
                 <pre><code class="cpp ce">
@@ -826,6 +686,170 @@ int main(int argc, const char *argv[]) {
                     \]
                 </div>
             </section>
+        </section>
+        <section id="compilersAreSuperSmart2">
+            <section><h3>What else has my compiler<br>done for me lately?</h3></section>
+            <section>
+                <h3>Functions</h3>
+                <div class="left-pane">
+                <pre><code class="cpp ce">
+/// g81:-O2 -std=c++1z -march=haswell
+// setup
+  #include &lt;vector>
+  using namespace std;
+int someFunc(int);
+int sum(const vector&lt;int> &v) {
+  int result = 0;
+  for (size_t i = 0;
+       i &lt; v.size(); ++i)
+    result += someFunc(v[i]);
+  return result;
+}</code></pre>
+                </div>
+                <div class="right-pane">
+                    <pre><code class="x86asm" data-trim>
+.L3:
+  mov edi, DWORD PTR [rdx+rbx*4]
+  inc rbx
+  call someFunc(int)
+  mov rdx, QWORD PTR [rbp+0]
+  add r12d, eax
+  mov rax, QWORD PTR [rbp+8]
+  sub rax, rdx
+  sar rax, 2
+  cmp rbx, rax
+  jb .L3
+                    </code></pre>
+                </div>
+                <a class="fragment" target="_blank"
+                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'//+setup%0A++%23include+%3Cvector%3E%0A++%23include+%3Cnumeric%3E%0A++using+namespace+std%3B%0Aint+someFunc(int)%3B%0Aint+sum(const+vector%3Cint%3E+%26v)+%7B%0A++return+accumulate(%0A++++begin(v),+end(v),+0,%0A++++%5B%5D(int+x,+int+y)+%7B+%0A++++++return+x+%2B+someFunc(y)%3B+%0A++%7D)%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Accumulate
+                    version</a>
+                <aside class="notes">
+                    Compiler can't make any assumptions about someFunc. So has to reload size.
+                    Even though vector is const, compiler can't assume it's not going to change.
+                    Using range-for fixes issue as range-for is defined to copy the extents of the iterand outside of
+                    loop.
+                </aside>
+            </section>
+            <section>
+                <h3>Aliasing 1/2</h3>
+                <div class="left-pane">
+                <pre><code class="cpp ce" data-noescape>
+/// g81:-O2 -std=c++1z -march=haswell
+// Worst API ever...
+void sumToFirstZero(
+    int *first, int &num,
+    int &sum) {
+  sum = 0;
+  int i;
+  for (i = 0; i < num; ++i) {
+    if (first[i] == 0) break;
+    sum += first[i];
+  }
+  num = i;
+}
+            </code></pre>
+                </div>
+                <div class="right-pane">
+                    <pre><code class="x86asm" data-trim>
+.L4:
+  inc rax
+  mov ecx, DWORD PTR [rdi-4+rax*4]
+  test ecx, ecx
+  je .L2
+.L3:
+  add r8d, ecx
+  mov r9d, eax
+  mov DWORD PTR [rdx], r8d
+  cmp DWORD PTR [rsi], eax
+  jg .L4
+                    </code></pre>
+                </div>
+                <a class="fragment" target="_blank"
+                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'struct+Result+%7B%0A++int+sum%3B%0A++int+lastNonZero%3B%0A%7D%3B%0AResult+sumToFirstZero(%0A++++const+int+*first,+int+num)+%7B%0A++Result+r%7B0,0%7D%3B%0A++int+i%3B%0A++for+(i+%3D+0%3B+i+%3C+num%3B+%2B%2Bi)+%7B%0A++++if+(first%5Bi%5D+%3D%3D+0)+break%3B%0A++++r.sum+%2B%3D+first%5Bi%5D%3B%0A++%7D%0A++r.lastNonZero+%3D+i%3B%0A++return+r%3B%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O2+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Alternative
+                    implementation</a>
+            </section>
+            <section>
+                <h3>Aliasing 2/2</h3>
+                <div class="left-pane">
+                <pre><code class="cpp ce" data-noescape>
+/// g81:-O3 -std=c++1z -march=haswell
+void maxArray(double* x, double* y) {
+  for (int i = 0; i < 65536; i++) {
+    if (y[i] > x[i])
+      x[i] = y[i];
+  }
+}
+            </code></pre>
+                </div>
+                <div class="right-pane">
+                    <pre><code class="x86asm" data-trim>
+maxArray(double*, double*):
+  lea rax, [rsi+32]
+  cmp rdi, rax
+  jnb .L10
+  lea rax, [rdi+32]
+  cmp rsi, rax
+  jb .L9
+...
+                    </code></pre>
+                </div>
+                <a class="fragment" target="_blank"
+                   href="http://localhost:10240/#g:!((g:!((g:!((h:codeEditor,i:(fontScale:2.5,j:1,lang:c%2B%2B,source:'void+maxArray(double*+__restrict+x,%0A++++++++++++++double*+__restrict+y)+%7B%0A++for+(int+i+%3D+0%3B+i+%3C+65536%3B+i%2B%2B)+%7B%0A++++x%5Bi%5D+%3D+((y%5Bi%5D+%3E+x%5Bi%5D)+%3F+y%5Bi%5D+:+x%5Bi%5D)%3B%0A++%7D%0A%7D%0A'),l:'5',n:'0',o:'C%2B%2B+source+%231',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0'),(g:!((h:compiler,i:(compiler:g81,filters:(b:'0',binary:'1',commentOnly:'0',demangle:'0',directives:'0',execute:'1',intel:'0',trim:'0'),fontScale:3,lang:c%2B%2B,libs:!(),options:'-O3+-std%3Dc%2B%2B1z+-march%3Dhaswell',source:1),l:'5',n:'0',o:'x86-64+gcc+8.1+(Editor+%231,+Compiler+%231)+C%2B%2B',t:'0')),k:50,l:'4',n:'0',o:'',s:0,t:'0')),l:'2',n:'0',o:'',t:'0')),version:4">Better</a>
+            </section>
+            <section><h3>Heap elision</h3>
+                <pre><code data-trim class="cpp ce">
+/// g81:-O2 -std=c++1z -march=haswell
+// setup
+  #include &lt;memory>
+  using namespace std;
+
+int func() {
+  auto a = make_unique&lt;int>(42);
+  auto b = make_unique&lt;int>(24);
+  return *a + *b;
+}
+                </code></pre>
+            </section>
+            <section><h3>Ternary operator</h3>
+                <div class="left-pane">
+                    <pre><code class="cpp ce" data-trim>
+/// g81:-O2 -std=c++1z -march=haswell
+int func(int i) {
+  return (i < 0) ? 1234 : 5678;
+}
+                    </code></pre>
+                </div>
+                <div class="right-pane">
+                    <pre><code class="x86asm" data-noescape data-trim>
+func(int):
+  mov eax, edi
+  sar eax, 31
+  and eax, -4444
+  add eax, 5678
+  ret
+                    </code></pre>
+                </div>
+            </section>
+
+            <section><h3>Virtual methods</h3>
+                <pre><code class="cpp ce">
+/// g81:-O2 -std=c++1z
+// setup
+  #include &lt;vector>
+  using namespace std;
+struct Coster { virtual int costFor(int x) = 0; };
+
+int totalCost(Coster &coster,
+              const vector&lt;int> &v) {
+  int result = 0;
+  for (auto i : v)
+    result += coster.costFor(i);
+  return result;
+}
+                </code></pre>
+            </section>
+
             <section>
                 <h3>What has my compiler done for me lately?</h3>
                 <div class="fragment">A lot!</div>
@@ -837,7 +861,7 @@ int main(int argc, const char *argv[]) {
         <section id="howitworks">
             <section>
                 <h3>How it works</h3>
-                <!-- TODO picture of kirk -->
+                <img src="images/kirk.jpeg" height="600px">
             </section>
             <section>
                 <h3>How it works - Backend</h3>
@@ -873,6 +897,10 @@ webServer.listen(10240);
                     <li>Docker images</li>
                     <li>Shared compiler storage</li>
                 </ul>
+            </section>
+            <section>
+                <h3>Amazon EC2</h3>
+                <img src="images/EC2.png">
             </section>
             <section>
                 <h3>The compilers</h3>
@@ -927,6 +955,10 @@ webServer.listen(10240);
         <!------------------------------------------------------->
         <section id="conclusions">
             <section>
+                <h3>Usage</h3>
+                <iframe src="https://www.stathat.com/s/QM805B71geQ0" width="800px" height="500px"></iframe>
+            </section>
+            <section>
                 <h3>Other uses</h3>
                 <ul>
                     <li>Code pastebin</li>
@@ -953,8 +985,8 @@ webServer.listen(10240);
                     <li>Thanks to contributors:
                         <ul>
                             <li>Rubén Rincón</li>
-                            <li>Jared Wyles, Partouf, Simon Brand, Chedy Najjar</li>
-                            <li>...Johan Engelen...and the rest!</li>
+                            <li>Jared Wyles, Partouf, Simon Brand, Chedy Najjar,<br>
+                            Filipe Cabecinhas, Johan Engelen...and the rest!</li>
                         </ul>
                     </li>
                     <li>Thanks to Patreon folks</li>
