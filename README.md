@@ -1,3 +1,3 @@
-# As-yet unnamed talk for cppnow
+# What else has my compiler done for me lately?
 
-Forked from my CppCon keynote, and hastily hacked together.
+Source to the C++Now 2018 talk I did at short notice in Aspen.
